@@ -13,7 +13,19 @@ $greetings = "Welcome to Danitified Banking App";
 </head>
 
 <body>
+    <?php include "components/navbar.html" ?>
+    </nav>
     <h1><?php echo $greetings ?></h1>
 </body>
 
 </html>
+
+<!-- Create a new github repository named (portfolio) 
+=> Create a portfolio for a tech team
+=> Landing page
+=> About page
+=> Contact page
+=> Services page
+=> Pricing page
+
+-->
