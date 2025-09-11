@@ -27,5 +27,9 @@ $greetings = "Welcome to Danitified Banking App";
 => Contact page
 => Services page
 => Pricing page
+=> Project page
+
+--- Using the same navbar and footer for all pages (includes)
+--- Don't hardcode the services and prices
 
 -->
