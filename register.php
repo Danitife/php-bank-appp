@@ -15,6 +15,11 @@
 <body>
     <?php include "components/navbar.html" ?>
     <form class="w-50 m-auto mt-4 p-3 rounded shadow" action="auth/processForm.php" method="post">
+        <?php
+        if (isset($_GET['anything'])) {
+            echo "<div class='alert alert-danger'>$_GET[anything]</div>";
+        }
+        ?>
         <h2>Register User</h2>
         <div class="form-group">
             <label class="text-dark" for="">First Name</label>
@@ -22,19 +27,19 @@
         </div>
         <div class="form-group">
             <label class="text-dark" for="">Last Name</label>
-            <input class="form-control" type="text">
+            <input name="last_name" class="form-control" type="text">
         </div>
         <div class="form-group">
             <label class="text-dark" for="">Email</label>
-            <input class="form-control" type="email">
+            <input name="email" class="form-control" type="email">
         </div>
         <div class="form-group">
             <label class="text-dark" for="">Password</label>
-            <input class="form-control" type="text">
+            <input name="password" class="form-control" type="text">
         </div>
         <div class="form-group">
             <label class="text-dark" for="">Confirm Password</label>
-            <input class="form-control" type="text">
+            <input name="c_password" class="form-control" type="text">
         </div>
         <div class="form-group">
             <label class="text-dark" for="">DOB</label>
