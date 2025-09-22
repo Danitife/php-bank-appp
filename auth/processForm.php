@@ -44,10 +44,10 @@ if ($password != $c_password) {
     header("Location: ../register.php?anything=Your password does not match");
     exit();
 }
+$hashed = password_hash($password, PASSWORD_DEFAULT);
 session_start();
-$arr = ["Dan", "Sam", "Vic"];
-$_SESSION['users'] = $arr;
-$_SESSION['session_email'] = $email;
+$userDetails = ["email" => $email, "password" => $hashed, "fn" => $fn, "ln" => $ln];
+$_SESSION['userDetails'] = $userDetails;
 header("Location: ../login.php");
 // echo $fn;
 // EMAIL_FILTER_VAR => Validate your email
