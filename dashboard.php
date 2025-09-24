@@ -38,3 +38,8 @@ if (isset($_GET['logout'])) {
 </body>
 
 </html>
+
+
+// SQL => Structured Query Language (CREATE UPDATE DELETE INSERT SET WHERE JOIN)....
+// MYSQL
+// MYSQLI

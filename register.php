@@ -43,18 +43,36 @@
         </div>
         <div class="form-group">
             <label class="text-dark" for="">DOB</label>
-            <input class="form-control" type="date">
+            <input name="dob" class="form-control" type="date">
         </div>
         <div class="form-group">
             <label class="text-dark" for="">Phone</label>
-            <input class="form-control" type="number">
+            <input name="phone" class="form-control" type="number">
+        </div>
+        <div class="form-group">
+            <select class="form-select" name="gender" id="">
+                <option value="">Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="not specific">I choose not to specify</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-select" name="role" id="">
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
         </div>
         <div class="form-group">
             <label class="text-dark" for="">Address</label>
-            <textarea class="form-control" name="" id="" cols="30" rows="10"></textarea>
+            <textarea class="form-control" name="address" id="" cols="30" rows="10"></textarea>
         </div>
         <div class="my-3">
             <button class="btn btn-dark w-100">Register</button>
+        </div>
+        <div>
+            <p>Already have an account? <a href="login.php">Login</a></p>
         </div>
     </form>
 </body>
