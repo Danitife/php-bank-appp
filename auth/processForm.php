@@ -52,14 +52,7 @@ if ($password != $c_password) {
 // _}[-!2@]
 $hashed = password_hash($password, PASSWORD_DEFAULT);
 // $database = mysqli_connect("host_name", "username", "password", "database_name");
-$database = mysqli_connect("localhost", "root", "root", "bank-app");
-
-if ($database) {
-    echo "Connected";
-} else {
-    echo "Not connected";
-    displayError("Database not connected");
-}
+include "../database/database.php";
 
 
 $sql_query = "INSERT INTO users (first_name, last_name, email, password, phone_number, address, role, dob, gender)

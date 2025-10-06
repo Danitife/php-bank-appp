@@ -5,11 +5,22 @@ if (isset($_POST['upload'])) {
     // Select the file and create a path for reference
     $image_path = $target_folder . basename($_FILES["picture"]["name"]);
 
-    if (move_uploaded_file($_FILES["picture"]["tmp_name"], $image_path)) {
+    include "database/database.php";
+
+    $query = "UPDATE users SET profile_pix='$image_path' WHERE id=8";
+    $response = mysqli_query($database, $query);
+    if ($response) {
+        move_uploaded_file($_FILES["picture"]["tmp_name"], $image_path);
         echo "Uploaded";
     } else {
-        echo "Something went wrong";
+        echo "Something went wrong" . mysqli_error($database);
     }
+
+    // if (move_uploaded_file($_FILES["picture"]["tmp_name"], $image_path)) {
+    //     echo "Uploaded";
+    // } else {
+    //     echo "Something went wrong";
+    // }
 }
 // cloudinary => Open a cloudinary account
 // composer
@@ -27,7 +38,7 @@ if (isset($_POST['upload'])) {
     <main>
         <form action="fileUpload.php" method="post" enctype="multipart/form-data">
             <h1>Select a picture</h1>
-            <input name="picture" type="file">
+            <input name="picture" type="file" accept=".pdf">
             <button name="upload">Upload Picture</button>
         </form>
     </main>
