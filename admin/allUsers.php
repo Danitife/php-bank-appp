@@ -34,6 +34,7 @@ if ($db_user['role'] !== "admin") {
 </head>
 
 <body>
+    <?php include "../components/navbar.html" ?>
     <main>
         <h1>Welcome, <?php echo "$db_user[first_name] $db_user[last_name]" ?></h1>
         <h1>All users</h1>
