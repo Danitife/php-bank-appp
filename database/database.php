@@ -1,5 +1,5 @@
 <?php
-$database = mysqli_connect("localhost", "root", "root", "bank-app");
+$database = mysqli_connect("localhost", "root", "", "bank-app");
 
 if ($database) {
     echo "Connected";

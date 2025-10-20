@@ -2,8 +2,13 @@
 session_start();
 $user = $_SESSION['userDetails'];
 // print_r($user);
-
-$database = mysqli_connect("localhost", "root", "root", "bank-app");
+function displayError($message)
+{
+    header("Location: login.php?error=$message");
+    exit();
+}
+// $database = mysqli_connect("localhost", "root", "root", "bank-app");
+include "database/database.php";
 
 if ($database) {
     echo "Connected";
@@ -21,85 +26,39 @@ if ($database) {
 //     print_r($db_users);
 // }
 
-
-
-
-function displayError($message)
-{
-    header("Location: login.php?error=$message");
-    exit();
-}
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
     //------------ A QUERY TO GET A SINGLE USER -------------
-    $query = "SELECT email, password, role FROM users WHERE email='$email'";
-    $response = mysqli_query($database, $query);
-    // $db_user = mysqli_fetch_all($response, MYSQLI_ASSOC); // get more than one information in your database
-    // $db_user [[], [], []]
-    $db_user = mysqli_fetch_assoc($response); // get just one information i your database []
-    print_r($db_user);
+    try {
+        $query = "SELECT email, password, role FROM users WHERE email='$email'";
+        $response = mysqli_query($database, $query);
+        //code...
+        $db_user = mysqli_fetch_assoc($response); // get just one information i your database []
 
-    if ($email !==  $db_user['email']) {
-        echo "Incorrect email";
-        // return;
-    }
-    if (!password_verify($password, $db_user['password'])) {
-        displayError("Password not correct");
-    }
-    $token = bin2hex(random_bytes(16));
-    $token_exp = time() + (60 * 5); // Token expires in 5minutes
-    $loggedInUser = ["email" => $db_user['email'], "token" => $token, "token_exp" => $token_exp];
-    $_SESSION['loggenIn'] = $loggedInUser;
-    if ($db_user['role'] !== "admin") {
-        header("Location: dashboard.php");
-        exit;
-    }
-    header("Location: admin/allUsers.php");
-    // if ($email !== $user['email']) {
-    //     displayError("User email not correct");
-    // }
-    // if (!password_verify($password, $user['password'])) {
-    //     displayError("User password not correct");
-    // }
+        print_r($db_user);
 
-    // $token = bin2hex(random_bytes(16));
-    // $token_exp = time() + 30;
-    // $loggedInUser = ["fn" => $user['fn'], "ln" => $user['ln'], "token" => $token, "token_exp" => $token_exp];
-    // $_SESSION['loggenIn'] = $loggedInUser;
-    // header("Location: dashboard.php");
+        if ($email !==  $db_user['email']) {
+            echo "Incorrect email";
+            // return;
+        }
+        if (!password_verify($password, $db_user['password'])) {
+            displayError("Password not correct");
+        }
+        $token = bin2hex(random_bytes(16));
+        $token_exp = time() + (60 * 5); // Token expires in 5minutes
+        $loggedInUser = ["email" => $db_user['email'], "token" => $token, "token_exp" => $token_exp];
+        $_SESSION['loggenIn'] = $loggedInUser;
+        if ($db_user['role'] !== "admin") {
+            header("Location: dashboard.php");
+            exit;
+        }
+        header("Location: admin/allUsers.php");
+    } catch (\Exception $th) {
+        echo "Something went wrong" . $th->getMessage();
+    }
 }
-
-// bin2hex => Converts strings to hexadecimal format
-// hex2bin
-// time
-// random_byte ..... create a token
-
-$text = "This is php class";
-$text2 = "My users token";
-echo bin2hex($text) . "<br/>";
-echo hex2bin("546869732069732070687020636c617373") . "<br/>";
-echo random_bytes(16) . "<br/>";
-
-
-
-
-
-
-
-// password_verify
-// save all the info inside the processForm.php inside an array
-// Save the array in the session
-// create a login form (Fields => email and password)
-// Validate your input field
-// Ensure the email provided by the user matches with the email in the session
-// Ensure the password provided by the user matches with the password in the session using PASSWORD_VERIFY
-// If the information does not match Echo => User credentials not correct
-// Else =>
-// Navigate to your dashboard.php Displaying 'WELCOME TO YOUR DASHBOARD ---- FIRST NAME concatinate with LAST NAME'.....
-// SQL....
-// Authentication
 ?>
 
 
