@@ -1,5 +1,5 @@
 <?php
-
+include "auth/loggedInUser.php";
 ?>
 
 <!DOCTYPE html>

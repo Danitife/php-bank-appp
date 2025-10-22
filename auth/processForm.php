@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 $fn = $_POST['first_name'];
 $ln = $_POST['last_name'];
 $email = $_POST['email'];
@@ -15,6 +18,19 @@ function displayError($message)
     header("Location: ../register.php?anything=$message");
     exit();
 }
+
+function accountNumber()
+{
+    $acc_num = "";
+    // $acc_num = "";
+    for ($i = 0; $i < 10; $i++) {
+        // echo $i;
+        $acc_num = $acc_num . random_int(0, 9);
+    }
+    return $acc_num;
+}
+$acc_num = accountNumber();
+
 if (empty($fn)) {
     displayError("First name is required");
 }
@@ -54,10 +70,17 @@ $hashed = password_hash($password, PASSWORD_DEFAULT);
 // $database = mysqli_connect("host_name", "username", "password", "database_name");
 include "../database/database.php";
 
+$sql_query = "INSERT INTO users (first_name, last_name, email, account_number, password, phone_number, address, role, dob, gender)
+                         VALUES ('$fn', '$ln', '$email', '1031650755', '$hashed', '$phone', '$address', '$role', '$dob', '$gender')";
+try {
+    $response = mysqli_query($database, $sql_query);
+    //code...
+} catch (\Exception $th) {
+    //throw $th;
+    echo $th->getMessage();
+}
+echo $acc_num;
 
-$sql_query = "INSERT INTO users (first_name, last_name, email, password, phone_number, address, role, dob, gender)
-                         VALUES ('$fn', '$ln', '$email', '$hashed', '$phone', '$address', '$role', '$dob', '$gender')";
-$response = mysqli_query($database, $sql_query);
 if ($response) {
     session_start();
     $userDetails = ["email" => $email, "password" => $hashed, "fn" => $fn, "ln" => $ln];
