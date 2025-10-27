@@ -43,7 +43,6 @@ if ($result['status'] == true) {
     $amount = $result['data']['amount'];
     $new_amount = $user['amount'] + $amount;
     try {
-        echo "--------------------New amount" . $new_amount;
         $query = "UPDATE users SET amount='$new_amount' WHERE email='$email'";
         $query_amount_resp = mysqli_query($database, $query);
         if ($query_amount_resp) {
@@ -54,3 +53,16 @@ if ($result['status'] == true) {
         echo "Something went wrong" . $th->getMessage();
     }
 }
+
+// TRANSACTION TABLE => DEBIT \\ CREDIT
+// transaction_id
+// sender_id (12 => 15)
+// receiver_id
+// description
+// transaction_amount
+// transaction_status
+// trasaction_type (deposit, transfer, withdrawal)
+// sender_message = You transferred #777 to id_25
+// receiver_message = You recieved #777 from id_12
+// created_at
+// updated_at

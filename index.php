@@ -21,6 +21,19 @@ include "auth/loggedInUser.php";
         <input name="amount" type="text">
         <button name="addFund">Add Funds</button>
     </form>
+    <h1>Transfer Money</h1>
+    <form action="functions/transfer.php" method="post">
+        <input name="acc_num" type="text" placeholder="Enter account number">
+        <?php if (isset($_GET['acc_info'])) {
+            echo "<div class='alert alert-success'>$_GET[acc_info]</div>
+                    <button class='btn btn-success'>Make Transfer</button>
+            ";
+        } ?>
+        <?php if (isset($_GET['acc_err'])) {
+            echo "<div class='alert alert-danger'>$_GET[acc_err]</div>";
+        } ?>
+        <button name="addFund">Transfer</button>
+    </form>
 </body>
 
 </html>
