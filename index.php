@@ -23,10 +23,16 @@ include "auth/loggedInUser.php";
     </form>
     <h1>Transfer Money</h1>
     <form action="functions/transfer.php" method="post">
-        <input name="acc_num" type="text" placeholder="Enter account number">
+        <?php if (!isset($_GET['acc_info'])) {
+            echo "<input name=acc_num type=text placeholder='Enter account number'>";
+        } ?>
+
+
         <?php if (isset($_GET['acc_info'])) {
-            echo "<div class='alert alert-success'>$_GET[acc_info]</div>
-                    <button class='btn btn-success'>Make Transfer</button>
+            echo "
+            <input name=amount placeholder='Enter the amount you want to send' />
+            <div class='alert alert-success'>$_GET[acc_info]</div>
+                    <button name=transferFunds class='btn btn-success'>Make Transfer</button>
             ";
         } ?>
         <?php if (isset($_GET['acc_err'])) {
