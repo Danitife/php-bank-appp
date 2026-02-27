@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 
 include "config/database.php";
+include "auth/loggedInUser.php";
 
 // try {
 //     for ($i = 0; $i < 50; $i++) {
@@ -27,6 +28,16 @@ try {
 } catch (\Exception $e) {
     throw new \Exception($e->getMessage());
 }
+
+$my_parking_query = "SELECT * FROM parkings WHERE user_id={$user['id']} AND time_spent IS NULL";
+$my_parking_response = mysqli_query($conn, $my_parking_query);
+if (!$my_parking_response) {
+    echo "Error fetching my parking: " . mysqli_error($conn);
+} else {
+    $my_parkings = mysqli_fetch_all($my_parking_response, MYSQLI_ASSOC);
+    print_r($my_parkings);
+}
+
 ?>
 
 
@@ -52,7 +63,14 @@ try {
                 <div class="card-body">
                     <h5 class="card-title">Park Slot <?php echo $park['id']; ?></h5>
                     <p class="card-text">Status: <?php echo $park['availbility'] == TRUE ? 'Available' : 'Unavailable'; ?></p>
-                    <a href="services/process-book-slot.php?parkId=<?php echo $park['id'] ?>" class="btn btn-dark">Book Slot</a>
+
+                    <?php if (in_array($park['id'], array_column($my_parkings, 'slot_id'))) { ?>
+                        <a href="services/process-leave-slot.php?parkId=<?php echo $park['id'] ?>" class="btn btn-warning">Leave Slot</a>
+                    <?php } else { ?>
+                        <a href="services/process-book-slot.php?parkId=<?php echo $park['id'] ?>" class="btn btn-dark">Book Slot</a>
+                    <?php } ?>
+
+
                 </div>
             </div>
         <?php } ?>
